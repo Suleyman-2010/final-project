@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css')  }}"
+    />
+    <title>Contact Book</title>
+  </head>
+  <body>
+    <h1>Contact Book</h1>
+    <div>
+      <form method="post">
+        <span>
+          <label for="name">Name:</label>
+          <input type="text" name="name" id="name" required />
+        </span>
+        <span>
+          <label for="surname">Surname:</label>
+          <input type="text" name="surname" id="surname" required />
+        </span>
+        <span>
+          <label for="phone-number">Phone Number:</label>
+          <input type="tel" name="phone-number" id="phone-number" required />
+        </span>
+        <span>
+          <label for="email">Email:</label>
+          <input type="text" name="email" id="email" />
+        </span>
+        <button type="submit">Add</button>
+      </form>
+      <div>
+        {% if users | length > 0 %} {% for user in users %}
+        <span>{{ user[0] ~ ' ' ~ user[1] }}</span>
+        {% endfor %} {% endif %}
+      </div>
+      <div></div>
+    </div>
+  </body>
+</html>
