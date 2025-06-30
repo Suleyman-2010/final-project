@@ -2,4 +2,3 @@ __pycache__/
 .venv/
 .users.db
 *.log
-finish_today.sh
