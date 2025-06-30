@@ -1,46 +1,22 @@
-from pathlib import Path
-
-from flask import (Flask, Response, redirect, render_template, request,
-                   send_from_directory)
-
-from connection_manager import connection
+import requests
+from flask import Flask, redirect, render_template, request
 
 app = Flask(__name__)
-DATABASE = "users.db"
-
-users = []
 
 
-def renew_users():
-    with connection(DATABASE) as cursor:
-        cursor.execute("SELECT * FROM users")
-        users = cursor.fetchall()
-
-
-renew_users()
+def get_users():
+    return requests.get("http://127.0.0.1:5001/users").json()
 
 
 @app.route("/", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
-        name = request.form["name"]
-        surname = request.form["surname"]
-        email = request.form["email"]
-        phone_number = request.form["phone-number"]
-        with connection(DATABASE) as cursor:
-            cursor.execute(
-                "INSERT INTO users VALUES(?, ?, ?, ?)",
-                (name, surname, email, phone_number),
-            )
-        renew_users()
+        info_names = ["name", "surname", "email", "phone_number"]
+        infos = [request.form[name] for name in info_names]
+        requests.post("http://127.0.0.1:5001/add_user", json=infos)
         return redirect("/")
-    print(users)
-    return render_template("index.html", users=users)
+    return render_template("index.html", users=get_users())
 
 
-@app.route("/favicon.ico")
-def icon():
-    static_dir = Path(__file__).parent / "static"
-    return send_from_directory(
-        static_dir, "favicon.ico", mimetype="image/vnd.microsoft.icon"
-    )
+if __name__ == "__main__":
+    app.run(debug=True)
