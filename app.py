@@ -6,6 +6,11 @@ app: Flask = Flask(__name__)
 DATABASE = ".users.db"
 info_names = ("name", "surname", "email", "phone_number")
 
+with connection(DATABASE) as cursor:
+    cursor.execute(
+        "CREATE TABLE IF NOT EXISTS users (name TEXT, surname TEXT, email TEXT, phone_number TEXT)"
+    )
+
 
 def get_users():
     with connection(DATABASE) as cursor:
