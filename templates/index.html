@@ -10,32 +10,42 @@
   </head>
   <body>
     <h1>Contact Book</h1>
-    <div>
-      <form method="post">
-        <span>
-          <label for="name">Name:</label>
-          <input type="text" name="name" id="name" required />
-        </span>
-        <span>
-          <label for="surname">Surname:</label>
-          <input type="text" name="surname" id="surname" required />
-        </span>
-        <span>
-          <label for="phone_number">Phone Number:</label>
-          <input type="tel" name="phone_number" id="phone_number" required />
-        </span>
-        <span>
-          <label for="email">Email:</label>
-          <input type="text" name="email" id="email" />
-        </span>
-        <button type="submit">Add</button>
-      </form>
-      <div>
-        {% if users | length > 0 %} {% for user in users %}
-        <span>{{ user[0] ~ ' ' ~ user[1] }}</span>
-        {% endfor %} {% endif %}
-      </div>
-      <div></div>
-    </div>
+    <main>
+      <section>
+        <h2>Create new contact</h2>
+        <form method="post">
+          <span>
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" required />
+          </span>
+          <span>
+            <label for="surname">Surname:</label>
+            <input type="text" name="surname" id="surname" required />
+          </span>
+          <span>
+            <label for="phone_number">Phone Number:</label>
+            <input type="tel" name="phone_number" id="phone_number" required />
+          </span>
+          <span>
+            <label for="email">Email:</label>
+            <input type="text" name="email" id="email" />
+          </span>
+          <button type="submit">Add</button>
+        </form>
+      </section>
+      <section>
+        <h2>Contacts</h2>
+        <article>
+          {% if users | length > 0 %} {% for user in users %}
+          <button class="user-button">{{ user[0] ~ ' ' ~ user[1] }}</button>
+          {% endfor %} {% endif %}
+        </article>
+      </section>
+      <section>
+        <h2>Contact Info</h2>
+        <article></article>
+      </section>
+    </main>
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
   </body>
 </html>

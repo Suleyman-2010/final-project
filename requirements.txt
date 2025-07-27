@@ -1,3 +1,2 @@
 flask
 pathlib
-requests
